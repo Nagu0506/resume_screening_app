@@ -57,17 +57,7 @@ def process():
 
         matched_skills = sorted(resume_words.intersection(jd_words))
 
-        # ---- Percentage Match ----
-        if len(jd_words) > 0:
-            match_percentage = (len(matched_skills) / len(jd_words)) * 100
-        else:
-            match_percentage = 0
-
-        return render_template(
-            "results.html",
-            matched_skills=matched_skills,
-            match_percentage=round(match_percentage, 2)
-        )
+        return render_template("results.html", matched_skills=matched_skills)
 
     except KeyError as e:
         return f"Missing form field: {str(e)}", 400
