@@ -1,75 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Match Checker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #2b5876, #4e4376);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            width: 400px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-        }
-        input[type="file"], textarea {
-            width: 100%;
-            margin-top: 8px;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            outline: none;
-        }
-        button {
-            margin-top: 20px;
-            width: 100%;
-            background-color: #ff9800;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #e68a00;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Screening App</title>
 </head>
-<body>
-    <div class="container">
-        <h1>Resume Match Checker</h1>
-        <form action="/process" method="POST" enctype="multipart/form-data">
-            <label>Upload Resume:</label>
-            <input type="file" name="resume" required>
+<body style="margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; line-height:1.7;">
 
-            <label>Paste Job Description:</label>
-            <textarea name="job_description" rows="6" required></textarea>
+<div style="padding:60px; text-align:center;">
+    <h1 style="color:#fff; font-size:36px;">Resume Screening App</h1>
+    <form action="/" method="POST" enctype="multipart/form-data" style="margin-top:40px; max-width:600px; margin-left:auto; margin-right:auto; text-align:left;">
+        <div style="margin-bottom:25px;">
+            <label style="font-size:18px;">Upload Resume (PDF, DOCX, TXT):</label><br>
+            <input type="file" name="resume" required style="width:100%; padding:10px; margin-top:5px;">
+        </div>
+        <div style="margin-bottom:25px;">
+            <label style="font-size:18px;">Job Description:</label><br>
+            <textarea name="job_description" rows="8" style="width:100%; padding:10px; margin-top:5px;" placeholder="Paste job description here..." required></textarea>
+        </div>
+        <button type="submit" style="padding:14px 30px; background:#fff; color:#000; border:none; cursor:pointer; font-size:16px; font-weight:bold;">Check Resume</button>
+    </form>
+</div>
 
-            <button type="submit">Check Match</button>
-        </form>
-    </div>
 </body>
 </html>

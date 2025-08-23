@@ -6,6 +6,7 @@ import re
 
 app = Flask(__name__)
 
+# Folders for uploads
 UPLOAD_FOLDER = "uploads"
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -13,7 +14,6 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # ---------- Helper Functions ----------
-
 def extract_text_from_file(file_path):
     text = ""
     if file_path.endswith(".txt"):
@@ -31,36 +31,43 @@ def extract_text_from_file(file_path):
 
 def clean_and_tokenize(text):
     text = text.lower()
-    text = re.sub(r"[^a-z0-9+]", " ", text)  # remove special chars
+    text = re.sub(r"[^a-z0-9]", " ", text)
     return set(text.split())
 
 # ---------- Routes ----------
-
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        resume_file = request.files.get("resume")
+        job_description = request.form.get("job_description", "")
 
-@app.route("/process", methods=["POST"])
-def process():
-    try:
+        if not resume_file or not job_description:
+            return "Please provide both resume and job description", 400
+
         # Save resume
-        resume_file = request.files["resume"]
         resume_path = os.path.join(app.config["UPLOAD_FOLDER"], resume_file.filename)
         resume_file.save(resume_path)
 
-        # Extract and clean text
+        # Extract text
         resume_text = extract_text_from_file(resume_path)
-        job_description = request.form["job_description"]
-
         resume_words = clean_and_tokenize(resume_text)
         jd_words = clean_and_tokenize(job_description)
 
-        matched_skills = sorted(resume_words.intersection(jd_words))
+        matched_skills = sorted(list(resume_words.intersection(jd_words)))
 
-        return render_template("results.html", matched_skills=matched_skills)
+        # Calculate match percentage
+        match_percentage = 0
+        if jd_words:
+            match_percentage = round(len(matched_skills) / len(jd_words) * 100, 2)
 
-    except KeyError as e:
-        return f"Missing form field: {str(e)}", 400
+        return render_template(
+            "results.html",
+            resume_name=resume_file.filename,
+            matched_skills=matched_skills,
+            match_percentage=match_percentage
+        )
+    else:
+        return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

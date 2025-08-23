@@ -1,61 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Matching Skills</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 8px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 15px;
-            text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Screening Results</title>
 </head>
-<body>
-    <div class="container">
-        <h1>Matched Skills</h1>
-        {% if matched_skills %}
-            <ul>
-                {% for skill in matched_skills %}
-                    <li>{{ skill }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No skills matched.</p>
-        {% endif %}
-        <a href="/">Go Back</a>
-    </div>
+<body style="margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; line-height:1.7;">
+
+<div style="padding:60px; text-align:center;">
+    <h1 style="color:#fff; font-size:32px;">Results for {{ resume_name }}</h1>
+    
+    <h2 style="margin-top:20px; color:#0ff;">Match Percentage: {{ match_percentage }}%</h2>
+    
+    {% if matched_skills %}
+        <h3 style="margin-top:30px; color:#fff;">Matched Skills / Keywords:</h3>
+        <ul style="list-style-type:none; padding:0; font-size:16px;">
+            {% for skill in matched_skills %}
+                <li style="background:#111; margin:5px 0; padding:8px; border-radius:6px;">{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="margin-top:20px; font-size:18px;">No matching skills found.</p>
+    {% endif %}
+    
+    <a href="/" style="display:inline-block; margin-top:40px; padding:12px 25px; background:#0ff; color:#000; text-decoration:none; font-weight:bold; border-radius:5px;">Check Another Resume</a>
+</div>
+
 </body>
 </html>
